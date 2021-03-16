@@ -44,11 +44,12 @@ public class EmployeePayRollServiceTest
         //-------------------UC4 ------------------------------------------
     }
     @Test
-    void givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchFilteredEmployeeCount() {
+    void givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchFilteredEmployeeCount()
+    {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        String date = "2018-01-01";
-        String endDate= "2020-12-31";
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readFilteredEmpPayRollData(EmployeePayrollService.IOService.DB_IO,date,endDate);
-        Assertions.assertEquals(4,employeePayrollData.size());
+        //  String startDate = "2018-01-01";
+        //   String endDate= "2020-12-31";
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readFilteredEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
+        Assertions.assertEquals(5,employeePayrollData.size());
     }
 }
