@@ -24,12 +24,22 @@ public class EmployeePayRollServiceTest
 
 
     }
-
+    //-----------------UC2--------------------------------------
     @Test
     public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchEmpCount() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
-        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayRollData(EmployeePayrollService.IOService.DB_IO);
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
         System.out.println(employeePayrollData);
         Assertions.assertEquals(6, employeePayrollData.size());
+    }
+    //-----------------UC3--------------------------------------
+    @Test
+    void givenNewSalaryForEmployee_whenUpdate_shouldSyncWithDB() {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
+        employeePayrollService.updateEmployeeSalary("Terisa", 30000000.00);
+        boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Terisa");
+        System.out.println(result);
+        Assertions.assertEquals(true, result);
     }
 }
