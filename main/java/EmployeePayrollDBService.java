@@ -99,8 +99,10 @@ public class EmployeePayrollDBService {
         return 0;
     }
 
-    public List<EmployeePayrollData> readFilteredData(String date,String endDate) {
-        String sql = String.format("select * from employee_payroll where start between '%s' and '%s';",date,endDate);
+    //public List<EmployeePayrollData> readFilteredData(String startDate,String endDate) {
+        public List<EmployeePayrollData> readFilteredData() {
+       // String sql = String.format("select * from employee_payroll where start between '%s' and '%s';",startDate,endDate);
+        String sql = String.format("select * from employee_payroll where start between cast('2017-01-01' as date) and date(now());");
         List<EmployeePayrollData> employeePayrollDataList = new ArrayList<>();
         try (Connection connection = this.getConnection()){
             Statement statement = connection.createStatement();

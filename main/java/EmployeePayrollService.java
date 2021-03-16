@@ -92,9 +92,11 @@ public class EmployeePayrollService {
         return employeePayrollDataList.get(0).equals(getEmployeePayRollData(name));
     }
 
-    public List<EmployeePayrollData> readFilteredEmpPayRollData(IOService ioService,String date,String date1) {
+  //  public List<EmployeePayrollData> readFilteredEmpPayRollData(IOService ioService,String startDate,String endDate) {
+        public List<EmployeePayrollData> readFilteredEmpPayRollData(IOService ioService) {
         if (ioService.equals(IOService.DB_IO))
-            this.employeePayrollList = employeePayrollDBService.readFilteredData(date,date1);
+            //this.employeePayrollList = employeePayrollDBService.readFilteredData(startDate,endDate);
+            this.employeePayrollList = employeePayrollDBService.readFilteredData();
         return this.employeePayrollList;
     }
 }
