@@ -1,26 +1,22 @@
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class EmployeePayrollData
-{
-    public String employeeName;
+public class EmployeePayrollData {
     public int employeeID;
-    public int employeeSalary;
-    public  double employeeSalary1;
+    public String employeeName;
+    public double employeeSalary;
     public String gender;
     public LocalDate start;
 
-    public EmployeePayrollData(String employeeName, int employeeID, double employeeSalary, String gender, LocalDate start)
+    public EmployeePayrollData( int employeeID,String employeeName, double employeeSalary, String gender, LocalDate start)
     {
-        this.employeeName = employeeName;
-        this.employeeID = employeeID;
-        this.employeeSalary1 = employeeSalary;
+        this(employeeID,employeeName,employeeSalary);
         this.gender = gender;
         this.start = start;
     }
 
-    public EmployeePayrollData( int employeeID, String employeeName,int employeeSalary) {
-
+    public EmployeePayrollData(int employeeID,String employeeName,  double employeeSalary)
+    {
         this.employeeID = employeeID;
         this.employeeName = employeeName;
         this.employeeSalary = employeeSalary;
@@ -30,23 +26,17 @@ public class EmployeePayrollData
     public String toString()
     {
         return "EmployeePayrollData{" +
-                "employeeName='" + employeeName + '\'' +
-                ", employeeID=" + employeeID +
+                "employeeID=" + employeeID +
+                ", employeeName='" + employeeName + '\'' +
                 ", employeeSalary=" + employeeSalary +
                 '}';
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (o == null || getClass() != o.getClass()) return false;
         EmployeePayrollData that = (EmployeePayrollData) o;
-        return employeeID == that.employeeID
-                && employeeSalary == that.employeeSalary
-                && Objects.equals(employeeName, that.employeeName)
-                && Objects.equals(gender, that.gender)
-                && Objects.equals(start, that.start);
+        return employeeID == that.employeeID && Double.compare(that.employeeSalary, employeeSalary) == 0 && Objects.equals(employeeName, that.employeeName) && Objects.equals(gender, that.gender) && Objects.equals(start, that.start);
     }
 }
