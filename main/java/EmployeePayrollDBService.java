@@ -69,13 +69,17 @@ public class EmployeePayrollDBService {
         return employeePayrollDataList;
     }
 
-    private void preparedStatementForEmployeeData() {
-        try {
+    //Prepared Statement-------------------------
+    private void preparedStatementForEmployeeData()
+    {
+        try
+        {
             Connection connection;
             connection = this.getConnection();
             String sql = "select * from employee_payroll where name= ?;";
             employeePayRollDataStatement = connection.prepareStatement(sql);
-        }catch (SQLException e){
+        }
+        catch (SQLException e){
             e.printStackTrace();
         }
     }
