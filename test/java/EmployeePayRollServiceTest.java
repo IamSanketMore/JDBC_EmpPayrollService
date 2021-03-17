@@ -1,8 +1,10 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class EmployeePayRollServiceTest
 {
@@ -41,8 +43,9 @@ public class EmployeePayRollServiceTest
         boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("Terisa");
         System.out.println(result);
         Assertions.assertEquals(true, result);
-        //-------------------UC4 ------------------------------------------
+
     }
+    //------------------- UC4 ------------------------------------------
     @Test
     void givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchFilteredEmployeeCount()
     {
@@ -52,4 +55,30 @@ public class EmployeePayRollServiceTest
         List<EmployeePayrollData> employeePayrollData = employeePayrollService.readFilteredEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
         Assertions.assertEquals(5,employeePayrollData.size());
     }
+
+    //-------------------UC5 ------------------------------------------
+    @Test
+    void  givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchEmployeeCount()
+    {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+      //  List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
+        LocalDate startDate = LocalDate.of(2018,01,01);
+        LocalDate endDate = LocalDate.now();
+        List<EmployeePayrollData> employeePayrollData =
+                employeePayrollService.readEmployeePayrollForDateRange(EmployeePayrollService.IOService.DB_IO,startDate,endDate);
+        Assertions.assertEquals(4,employeePayrollData.size());
+    }
+
+    //------------------------- UC-6 ------------------------------------------
+    @Test
+    public void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProper()
+    {
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        employeePayrollService.readEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
+        Map<String,Double> averageSalaryByGender = employeePayrollService.readAveregeSalaryByGender(EmployeePayrollService.IOService.DB_IO);
+
+        Assertions.assertTrue(averageSalaryByGender.get("M").equals(262000.00) &&
+        averageSalaryByGender.get("F").equals(30000000.00));
+    }
+
 }
