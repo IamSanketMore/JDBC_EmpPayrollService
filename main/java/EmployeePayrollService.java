@@ -1,8 +1,18 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class EmployeePayrollService {
+
+    public Map<String,Double> readAveregeSalaryByGender(IOService ioService)
+    {
+        if(ioService.equals((IOService.DB_IO)))
+            return employeePayrollDBService.getAverageSalaryByGender();
+        return null;
+    }
+
 
     public enum IOService{CONSOLE_IO,FILE_IO,DB_IO,REST_IO}
 
@@ -94,9 +104,17 @@ public class EmployeePayrollService {
 
   //  public List<EmployeePayrollData> readFilteredEmpPayRollData(IOService ioService,String startDate,String endDate) {
         public List<EmployeePayrollData> readFilteredEmpPayRollData(IOService ioService) {
-        if (ioService.equals(IOService.DB_IO))
+            if (ioService.equals(IOService.DB_IO))
             //this.employeePayrollList = employeePayrollDBService.readFilteredData(startDate,endDate);
             this.employeePayrollList = employeePayrollDBService.readFilteredData();
         return this.employeePayrollList;
     }
+
+    public List<EmployeePayrollData> readEmployeePayrollForDateRange(IOService ioService, LocalDate startDate, LocalDate endDate)
+    {
+        if (ioService.equals(IOService.DB_IO))
+            return employeePayrollDBService.getEmployeePayrollForDateRange(startDate,endDate);
+        return null;
+    }
+
 }
