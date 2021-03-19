@@ -117,4 +117,7 @@ public class EmployeePayrollService {
         return null;
     }
 
+    public void addEmployee(String name, String gender, double salary, LocalDate date) {
+        employeePayrollList.add(employeePayrollDBService.addEmployeeData(name,gender,salary,date));
+    }
 }
