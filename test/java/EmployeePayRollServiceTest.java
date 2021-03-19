@@ -108,6 +108,14 @@ public class EmployeePayRollServiceTest
         employeePayrollService.addEmployee(Arrays.asList(payrollData));
         Instant end = Instant.now();
         System.out.println("Duration with thread  "+ Duration.between(start,end));
+<<<<<<< HEAD
+=======
+        Instant threadStart = Instant.now();
+        employeePayrollService.addEmployeeToDBWithThreads(Arrays.asList(payrollData));
+        Instant threadEnd = Instant.now();
+        System.out.println("Duration with thread  "+Duration.between(threadStart,threadEnd));
+        employeePayrollService.printData(EmployeePayrollService.IOService.DB_IO);
+>>>>>>> MultiThreading-UC2
         Assertions.assertEquals(10,employeePayrollService.countEntries(EmployeePayrollService.IOService.DB_IO));
     }
 }
