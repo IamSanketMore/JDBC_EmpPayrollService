@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import javax.xml.catalog.Catalog;
 
-public class EmployeePayrollDBService 
-{
+public class EmployeePayrollDBService {
+    private int connectionCounter=0;
     private PreparedStatement employeePayRollDataStatement;
     private static EmployeePayrollDBService employeePayrollDBService;
     private EmployeePayrollDBService(){}
@@ -19,13 +19,16 @@ public class EmployeePayrollDBService
     }
 
     private Connection getConnection() throws SQLException {
+        connectionCounter++;
         String jdbcULR = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
         String userName = "root";
         String password = "Sanket@123";
         Connection connection;
-        System.out.println("Connecting To DB: " + jdbcULR);
+        System.out.println("Processing Thread: " + Thread.currentThread().getName()+
+                "Connection To DB With ID: " + connectionCounter);
         connection = DriverManager.getConnection(jdbcULR,userName,password);
-        System.out.println("Connection is successful..! " + connection);
+        System.out.println("Processing Thread: " + Thread.currentThread().getName()+
+                "ID: " + connectionCounter+ " Connection SuccessFul..!!"+connection);
         return connection;
     }
 

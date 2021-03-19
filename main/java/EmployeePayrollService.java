@@ -127,8 +127,6 @@ public class EmployeePayrollService {
         });
         System.out.println(employeePayrollList);
     }
-<<<<<<< HEAD
-=======
     public void addEmployeeToDBWithThreads(List<EmployeePayrollData> employeePayrollDataList) {
         Map<Integer,Boolean> empAdditionStatus = new HashMap<Integer,Boolean>();
         employeePayrollDataList.forEach(employeePayrollData -> {
@@ -148,5 +146,4 @@ public class EmployeePayrollService {
         }
         System.out.println(employeePayrollDataList);
     }
->>>>>>> MultiThreading-UC2
 }
