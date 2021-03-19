@@ -31,6 +31,10 @@ public class EmployeePayrollData {
                 ", employeeSalary=" + employeeSalary +
                 '}';
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(employeeName, employeeID, employeeSalary, gender, start);
+    }
 
     @Override
     public boolean equals(Object o) {
