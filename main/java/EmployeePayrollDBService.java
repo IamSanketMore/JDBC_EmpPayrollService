@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import javax.xml.catalog.Catalog;
 
-public class EmployeePayrollDBService {
+public class EmployeePayrollDBService 
+{
     private PreparedStatement employeePayRollDataStatement;
     private static EmployeePayrollDBService employeePayrollDBService;
     private EmployeePayrollDBService(){}
