@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.Map;
 
 public class EmployeePayRollServiceTest
 {
-
+    //-----------------JDBC - UC 1 --------------------------------------
     @Test
     void given3EmpWhenWrittenToFilesShouldMatchEmpEntries()
     {
@@ -23,10 +25,8 @@ public class EmployeePayRollServiceTest
         long result = employeePayrollService.countEntries(EmployeePayrollService.IOService.FILE_IO);
         System.out.println("Total Employee Entries :- "+result);
         Assertions.assertEquals(3,result);
-
-
     }
-    //-----------------UC2--------------------------------------
+    //--------------------- JDBC - UC 2 --------------------------------------
     @Test
     public void givenEmployeePayrollDB_WhenRetrieved_ShouldMatchEmpCount() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
@@ -34,7 +34,7 @@ public class EmployeePayRollServiceTest
         System.out.println(employeePayrollData);
         Assertions.assertEquals(6, employeePayrollData.size());
     }
-    //-----------------UC3--------------------------------------
+    //--------------------- JDBC - UC 3 --------------------------------------
     @Test
     void givenNewSalaryForEmployee_whenUpdate_shouldSyncWithDB() {
         EmployeePayrollService employeePayrollService = new EmployeePayrollService();
@@ -45,7 +45,7 @@ public class EmployeePayRollServiceTest
         Assertions.assertEquals(true, result);
 
     }
-    //------------------- UC4 ------------------------------------------
+    //--------------------- JDBC - UC 4 --------------------------------------
     @Test
     void givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchFilteredEmployeeCount()
     {
@@ -56,7 +56,7 @@ public class EmployeePayRollServiceTest
         Assertions.assertEquals(5,employeePayrollData.size());
     }
 
-    //-------------------UC5 ------------------------------------------
+    //--------------------- JDBC - UC 5 --------------------------------------
     @Test
     void  givenDateRangeToEmployeePayRollInDB_WhenRetrieved_ShouldMatchEmployeeCount()
     {
@@ -69,7 +69,7 @@ public class EmployeePayRollServiceTest
         Assertions.assertEquals(4,employeePayrollData.size());
     }
 
-    //------------------------- UC-6 ------------------------------------------
+    //--------------------- JDBC - UC 6 --------------------------------------
     @Test
     public void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProper()
     {
@@ -81,7 +81,7 @@ public class EmployeePayRollServiceTest
         averageSalaryByGender.get("F").equals(30000000.00));
     }
 
-
+    //--------------------- JDBC - UC 7 -8  --------------------------------------
     @Test
     void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldSyncWithDB ()
     {
@@ -90,5 +90,24 @@ public class EmployeePayRollServiceTest
         employeePayrollService.addEmployee("MARK","M",50000000.00,LocalDate.now());
         boolean result = employeePayrollService.checkEmployeePayRollSyncWithDB("MARK");
         Assertions.assertTrue(result);
+    }
+
+    //--------------------- MultiThreading - UC 1 --------------------------------------
+    @Test
+    void givenNewEmployeeToEmployeeRollDB_whenAdded_shouldMatchWithEntries () {
+        EmployeePayrollData[] payrollData = {
+                new EmployeePayrollData( 0,"Jeff", 1000000.00, "M", LocalDate.now()),
+                new EmployeePayrollData( 0, "Bill",2000000.00, "M", LocalDate.now()),
+                new EmployeePayrollData( 0,"Sunder", 4000000.00, "M", LocalDate.now()),
+                new EmployeePayrollData( 0,"Mukesh", 44000000.00, "M", LocalDate.now()),
+                new EmployeePayrollData(0,"Anil",  5000000.00, "M", LocalDate.now()),
+        };
+        EmployeePayrollService employeePayrollService = new EmployeePayrollService();
+        employeePayrollService.readEmpPayRollData(EmployeePayrollService.IOService.DB_IO);
+        Instant start = Instant.now();
+        employeePayrollService.addEmployee(Arrays.asList(payrollData));
+        Instant end = Instant.now();
+        System.out.println("Duration with thread  "+ Duration.between(start,end));
+        Assertions.assertEquals(10,employeePayrollService.countEntries(EmployeePayrollService.IOService.DB_IO));
     }
 }
